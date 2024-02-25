@@ -1,0 +1,15 @@
+{
+  "packageDirectories": [
+    {
+      "path": "lib",
+      "default": true
+    },
+    {
+      "path": "demo"
+    }
+  ],
+  "name": "lightning-litmus-library",
+  "namespace": "",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "59.0"
+}
