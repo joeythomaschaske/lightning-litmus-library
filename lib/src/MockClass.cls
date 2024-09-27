@@ -1,8 +1,15 @@
 @IsTest
 public class MockClass implements System.StubProvider {
+
+  /**
+   * provides a list of called MockMethodCall objects in the order they were called.
+   */
+  public List<MockMethodCall> calls;
+
   private Map<String, MockMethod> mocksByName;
 
   public MockClass() {
+    this.calls = new List<MockMethodCall>();
     this.mocksByName = new Map<String, MockMethod>();
   }
 
@@ -29,6 +36,11 @@ public class MockClass implements System.StubProvider {
     List<String> listOfParamNames,
     List<Object> listOfArgs
   ) {
+
+    this.calls.add(
+      new MockMethodCall(stubbedObject, stubbedMethodName, returnType, listOfParamTypes, listOfParamNames, listOfArgs)
+    );
+
     String key = stubbedMethodName;
     MockMethod method = this.mocksByName.get(key);
     if (method == null) {
