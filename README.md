@@ -136,6 +136,11 @@ Called by the Stub API when invoking mocks in unit tests. Not very useful to cal
 - <b>listOfParamNames</b>: A list of the parameter names of the invoked method.
 - <b>listOfArgs</b>: The actual argument values passed into this method at runtime.
 
+#### calls
+This parameter stores a list of `MockMethodCall` objects representing each call to the mock class. This is useful for
+asserting the order of method calls in a unit test and the parameters passed to each method.
+
+
 ### MockMethod
 
 A `MockMethod` represents a method to be mocked in a unit test. An instance of `MockMethod` holds all the parameters and returns the mocked values when invoked.
@@ -219,7 +224,14 @@ List<Object> 2ndInvocationParameters = mockSelectById.getNthCalledWith(2);
 Assert.areEqual(account1Id, 1stInvocationParameters[0]);
 Assert.areEqual(account2Id, 2ndInvocationParameters[0]);
 ```
-
+### MockMethodCall
+#### Attributes
+    public Object stubbedObject;
+    public String stubbedMethodName;
+    public Type returnType;
+    public List<Type> listOfParamTypes;
+    public List<String> listOfParamNames;
+    public List<Object> listOfArgs;
 ## Gotchas
 
 - Static methods cannot be mocked by the stub api and thus affects this library as well.
