@@ -50,7 +50,11 @@ public class MockMethod {
   public Object handleMethodCall(List<Object> parameters) {
     this.timesCalled += 1;
     this.callParameters.add(parameters);
-    return this.values.remove(0);
+    Object value = this.values.remove(0);
+    if (value instanceof Exception) {
+      throw (Exception) value;
+    }
+    return value;
   }
 
   /**

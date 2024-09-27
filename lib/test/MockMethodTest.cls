@@ -74,4 +74,32 @@ private with sharing class MockMethodTest {
       thrownException.getMessage()
     );
   }
+
+  @IsTest
+  private static void handleMethodCall_throwsExceptoinWhenDefined() {
+    // given
+    MockMethodTestException testException = new MockMethodTestException('Test Exception');
+
+    MockMethod mockMethod = new MockMethod(
+      'method',
+      new List<Object>{ 'methodReturnValue', testException}
+    );
+
+    // when
+    String result = (String) mockMethod.handleMethodCall(
+      new List<Object>{ 'methodParameters' }
+    );
+
+    MockMethodTestException caughtException;
+    try {
+      mockMethod.handleMethodCall(new List<Object>{ 'methodParameters' });
+    } catch (MockMethodTestException e) {
+      caughtException = e;
+    }
+
+    // then
+    Assert.areEqual(testException, caughtException, 'Exception should be thrown');
+  }
+
+  private class MockMethodTestException extends Exception {}
 }

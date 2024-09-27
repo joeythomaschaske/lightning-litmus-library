@@ -150,9 +150,21 @@ A `MockMethod` represents a method to be mocked in a unit test. An instance of `
 ```java
 MockClass mockAccountsSelector = new MockClass();
 
-List<Account> accountsToReturnOnFirstInvocation = new List<Account>{ // specific accounts };
-List<Account> accountsToReturnOnSecondInvocation = new List<Account> { // other specific accounts }
+List<Account> accountsToReturnOnFirstInvocation = new List<Account>{ /* specific accounts */ };
+List<Account> accountsToReturnOnSecondInvocation = new List<Account> { /*  other specific accounts */ }
 List<Object> returnValues = new List<Object> { accountsToReturnOnFirstInvocation, accountsToReturnOnSecondInvocation };
+
+MockMethod mockSelectById = new MockMethod('selectById', returnValues);
+mockAccountsSelector.addMockMethod(mockSelectById);
+```
+*Defining exceptions: If you want to throw an exception when the method is called, you can define an exception as a return value. The exception should be an instance of `Exception`.*
+
+```java
+MockClass mockAccountsSelector = new MockClass();
+
+List<Account> accountsToReturnOnFirstInvocation = new List<Account>{ // specific accounts };
+MyCustomException customException = new MyCustomException('Throw me'); // Exception to throw second time method is called
+List<Object> returnValues = new List<Object> { accountsToReturnOnFirstInvocation, customException };
 
 MockMethod mockSelectById = new MockMethod('selectById', returnValues);
 mockAccountsSelector.addMockMethod(mockSelectById);
